@@ -18,7 +18,7 @@
   const rows = $derived([
     { problem: 'month and day swapped (shared parser)', cause: 'parser', n: count('parser') },
     { problem: 'form hint makes people type month first', cause: 'hint', n: count('hint') },
-    { problem: 'date one day off, cause unconfirmed', cause: 'one-day', n: oneDay.length },
+    ...(oneDay.length ? [{ problem: 'date one day off, cause unconfirmed', cause: 'one-day', n: oneDay.length }] : []),
     ...(count('unplaced') ? [{ problem: 'not a day-first tenant', cause: 'unplaced', n: count('unplaced') }] : []),
   ]);
   const total = $derived(rows.reduce((s, r) => s + r.n, 0));
