@@ -1,0 +1,65 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: support desk
+status: proposed
+reviewed: 2026-11-06
+signature: 'v1.eyJzdWIiOiIyNzAiLCJhdWQiOiJjaGFsbGVuZ2U6d2hhdC1pdC1zaG93cyIsImlhdCI6MTc5Mzk3ODI4NiwiZXhwIjoxNzk0MDY0Njg2fQ.y5NiFc52nIg47eRQq1-9ak_ajL93nAyd2PGUJ-G2RFk'
+---
+
+<script>
+  import ProblemCounts from '#lib/kb/ProblemCounts.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+The desk merged every date report into #4471 and marked it known, with one fix queued. The
+reports hold more than one problem. This page splits them. The tickets are in the
+[project issues](https://github.com/franProton100/mega-s01e03-what-it-shows/issues).
+
+<Callout kind="warn">
+Counts are from the export of 4 October. The desk keeps working, so live numbers may differ.
+</Callout>
+
+## The problems
+
+<ProblemCounts ticket={4471} leftIn={['R-41236']} />
+
+1. **Month and day swapped.** The shared parser reads every date month first. Tenants that write
+   the day first get flipped dates. Ticket
+   [#1](https://github.com/franProton100/mega-s01e03-what-it-shows/issues/1).
+2. **Form hint.** Day-first tenants on the booking-v3 form see an MM/DD hint, so people type month
+   first. This needs a different fix from the parser. Ticket
+   [#2](https://github.com/franProton100/mega-s01e03-what-it-shows/issues/2).
+3. **One day off.** Four reports show a date one day off in the same month. A month swap cannot
+   make that. The cause is not known. Ticket
+   [#3](https://github.com/franProton100/mega-s01e03-what-it-shows/issues/3).
+
+## How the reports were sorted
+
+- One id is one report. The export overlaps, so repeats are removed first.
+- A report's cause comes from its **tenant** (the locale it writes dates in, and its booking
+  form), not from the subject line. The desk merged by subject, and that is how three problems
+  became one ticket.
+- The **intake tag** is a guess from the reporter's browser. It is shown for comparison and is
+  never used to sort.
+- The desk's own table below counts the five desk-flagged one-day reports under the shared parser.
+  This page separates four of them (R-41236 is explained at the end), so its parser count is
+  smaller. The table also predates tickets 1 to 3, so its "no ticket of its own" note is out of
+  date.
+
+<CauseTable ticket={4471} />
+
+## What we do not know
+
+<Callout>
+The cause of the one-day reports is unconfirmed. One reporter says only June is affected. That is
+not checked against other reports. The form hint cause comes from tenant and form data. The
+reports' own text never mentions the form.
+</Callout>
+
+One desk-flagged report, R-41236, says an invite arrived before the booking was made. It describes
+no day shift, so it stays under the shared parser.
+
+<RenderStamp {signature} />
